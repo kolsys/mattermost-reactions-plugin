@@ -1,6 +1,6 @@
 {
     "id": "com.github.kolsys.mattermost-reactions",
-    "name": "Mattermost reactions notifier",
+    "name": "Mattermost Reactions Notifier",
     "description": "This plugin allows you to see how many people have reacted with a given message in Mattermost.",
     "homepage_url": "https://github.com/kolsys/mattermost-reactions",
     "support_url": "https://github.com/kolsys/mattermost-reactions/issues",
