@@ -7,8 +7,6 @@ import (
 )
 
 const REACTION_KEY = "ract:"
-const DELETED_REACTION = "__DEL__"
-
 
 func (p *Plugin) getUsername(userID string) string {
 	user, err := p.API.GetUser(userID)
@@ -21,6 +19,38 @@ func (p *Plugin) getUsername(userID string) string {
 		return ""
 	}
 	return user.Username
+}
+
+func (p *Plugin) buildReactionsMessage(reactions []*model.Reaction, userID string) string {
+	rStats := make(map[string]int16)
+	uniqueReactors := make(map[string]bool)
+	for _, r := range reactions {
+		if r.UserId != userID {
+			uniqueReactors[r.UserId] = true
+		}
+		if val, ok := rStats[r.EmojiName]; ok {
+			rStats[r.EmojiName] = val + 1
+		} else {
+			rStats[r.EmojiName] = 1
+		}
+	}
+
+	reactors := maps.Keys(uniqueReactors)
+
+	firstReactor := "@" + p.getUsername(reactors[0])
+	secondReactor := ""
+	if len(reactors) == 2 {
+		secondReactor = " and @" + p.getUsername(reactors[1])
+	} else if len(reactors) > 1 {
+		secondReactor = " and several others"
+	}
+
+	emojis := ""
+
+	for emoji, val := range(rStats) {
+		emojis = fmt.Sprintf("%s:%s: %d ", emojis, emoji, val)
+	}
+	return fmt.Sprintf("%s%s reacted to your message\n%s", firstReactor, secondReactor, emojis)
 }
 
 
@@ -61,31 +91,13 @@ func (p *Plugin) CheckFeedMessage(reaction *model.Reaction) {
 		rPostID = string(brPostID)
 	}
 
-	// All reactions are deleted
-	if len(reactions) == 0 {
-		// Delete post with reactions and delay
-		if rPostID != "" && rPostID != DELETED_REACTION {
-			if err := p.API.DeletePost(rPostID); err != nil {
-				p.API.LogError(
-					"Failed to remove post",
-					"post_id", rPostID,
-					"error", err.Error(),
-				)
-			}
-		}
-		if err = p.API.KVSetWithExpiry(rKey, []byte(DELETED_REACTION), delay); err != nil {
-			p.API.LogError(
-				"Failed to set KV",
-				"key", rKey,
-				"value", DELETED_REACTION,
-				"error", err.Error(),
-			)
-		}
+	// All reactions deleted, nothing to do
+	if len(reactions) == 0 && rPostID == "" {
 		return
 	}
 
 	// Skip youself initialization but allow update
-	if userID == reaction.UserId && (rPostID == "" || rPostID == DELETED_REACTION) {
+	if userID == reaction.UserId && rPostID == "" {
 		return
 	}
 
@@ -100,41 +112,16 @@ func (p *Plugin) CheckFeedMessage(reaction *model.Reaction) {
 		return
 	}
 
-	rStats := make(map[string]int16)
-	uniqueReactors := make(map[string]bool)
-
-	reactionsTXT := ""
-	for _, r := range reactions {
-		if r.UserId != userID {
-			uniqueReactors[r.UserId] = true
-		}
-		if val, ok := rStats[r.EmojiName]; ok {
-			rStats[r.EmojiName] = val + 1
-		} else {
-			rStats[r.EmojiName] = 1
-		}
+	msg := "(Reactions deleted)"
+	if len(reactions) > 0 {
+		msg = p.buildReactionsMessage(reactions, userID)
 	}
 
-	reactors := maps.Keys(uniqueReactors)
-
-	firstReactor := "@" + p.getUsername(reactors[0])
-	secondReactor := ""
-	if len(reactors) == 2 {
-		secondReactor = " and @" + p.getUsername(reactors[1])
-	} else if len(reactors) > 1 {
-		secondReactor = " and several others"
-	}
-
-	for emoji, val := range(rStats) {
-		reactionsTXT = fmt.Sprintf("%s:%s: %d ", reactionsTXT, emoji, val)
-	}
 	postURL := fmt.Sprintf("%s/_redirect/pl/%s", *p.API.GetConfig().ServiceSettings.SiteURL, reaction.PostId)
-
-	msg := fmt.Sprintf("%s%s reacted to your message\n%s\n%s", firstReactor, secondReactor, reactionsTXT, postURL)
-
+	msg = fmt.Sprintf("%s\n%s", msg, postURL)
 
 	// No pushed yet, will create new post
-	if rPostID == "" || rPostID == DELETED_REACTION {
+	if rPostID == "" {
 		post, err := p.API.CreatePost(&model.Post{
 			ChannelId: channel.Id,
 			UserId: p.botID,
@@ -179,7 +166,7 @@ func (p *Plugin) CheckFeedMessage(reaction *model.Reaction) {
 		p.API.LogError(
 			"Failed to set KV",
 			"key", rKey,
-			"value", DELETED_REACTION,
+			"value", rPostID,
 			"error", err.Error(),
 		)
 	}

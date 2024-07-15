@@ -5,7 +5,7 @@
     "homepage_url": "https://github.com/kolsys/mattermost-reactions",
     "support_url": "https://github.com/kolsys/mattermost-reactions/issues",
     "icon_path": "assets/add-reaction.svg",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "min_server_version": "6.2.1",
     "server": {
         "executables": {
