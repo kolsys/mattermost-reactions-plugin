@@ -76,7 +76,7 @@ func (p *Plugin) setConfiguration(configuration *configuration) {
 		Username:    "reactions",
 		DisplayName: "Reactions",
 		Description: "A bot account created by the Mattermost reactions plugin.",
-	}, pluginapi.ProfileImagePath("/assets/add-reaction.png"))
+	}, pluginapi.ProfileImagePath("/assets/icon.png"))
 	if ensureBotError != nil {
 		panic(ensureBotError)
 	}
