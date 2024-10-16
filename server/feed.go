@@ -102,7 +102,7 @@ func (p *Plugin) CheckFeedMessage(reaction *model.Reaction) {
 	}
 
 	// Reactions exist, try to send message in direct
-  channel, err := p.API.GetDirectChannel(userID, p.botID)
+	channel, err := p.API.GetDirectChannel(userID, p.botID)
 	if err != nil {
 		p.API.LogError(
 			"Failed to get direct channel",

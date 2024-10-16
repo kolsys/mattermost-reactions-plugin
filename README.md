@@ -2,6 +2,9 @@
 
 This plugin allows you to see how many people have reacted with a given message in Mattermost.
 
+It's like Slack Reactions feed but in Mattermost.
+
+
 ## Development
 
 To avoid having to manually install your plugin, build and deploy your plugin using one of the following options. In order for the below options to work, you must first enable plugin uploads via your config.json or API and restart Mattermost.
