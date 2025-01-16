@@ -5,15 +5,21 @@ This plugin extends Mattermost's functionality by providing real-time notificati
 ## Key Features:
 
  **Customizable Notifications:** Set delay after a previous notification
+ 
  **Direct Messages:** Receive notifications for reactions in both public and private channels.
+ 
  **Thread Support:** Stay updated on reactions within threaded discussions.
+ 
  **Mobile Compatibility:** Enjoy seamless notifications on both desktop and mobile devices.
 
 ## Benefits:
 
  **Increased Engagement:** Stay connected with your team and foster a more interactive communication environment.
+ 
  **Improved Collaboration:** Quickly respond to feedback and acknowledge contributions.
+ 
  **Enhanced Visibility:** Never miss an important reaction to your messages.
+ 
 
 By integrating this plugin into your Mattermost instance, you can significantly enhance your team's communication and collaboration.
 
