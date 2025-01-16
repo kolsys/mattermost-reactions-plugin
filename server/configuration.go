@@ -21,6 +21,7 @@ import (
 // copy appropriate for your types.
 type configuration struct {
 	NotificationDelay int
+	ShowOnlyNew       bool
 }
 
 // Clone shallow copies the configuration. Your implementation may require a deep copy if

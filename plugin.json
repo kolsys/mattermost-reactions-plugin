@@ -1,11 +1,11 @@
 {
     "id": "com.github.kolsys.mattermost-reactions",
-    "name": "Mattermost Reactions Notifier",
+    "name": "Reactions Notifier",
     "description": "This plugin allows you to see how many people have reacted with a given message in Mattermost.",
     "homepage_url": "https://github.com/kolsys/mattermost-reactions",
     "support_url": "https://github.com/kolsys/mattermost-reactions/issues",
     "icon_path": "assets/icon.svg",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "min_server_version": "6.2.1",
     "server": {
         "executables": {
@@ -27,6 +27,13 @@
                 "help_text": "A deplay in seconds from the last reaction on message within have no new notifications will be pushed.",
                 "placeholder": "A delay in seconds",
                 "default": 21600
+            },
+            {
+                "key": "showOnlyNew",
+                "display_name": "Only new reactions:",
+                "type": "bool",
+                "help_text": "Show only new reactions that were posted after the notification delay expired.",
+                "default": true
             }
         ]
     }

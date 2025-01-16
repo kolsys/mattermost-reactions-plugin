@@ -1,8 +1,33 @@
-# Mattermost Reactions Notifier
+# Mattermost Reactions Notifier plugin
 
-This plugin allows you to see how many people have reacted with a given message in Mattermost.
+This plugin extends Mattermost's functionality by providing real-time notifications whenever a user reacts to your messages. Just like Slack's Reactions feature, you'll be instantly alerted when someone adds a reactions to your posts.
 
-It's like Slack Reactions feed but in Mattermost.
+## Key Features:
+
+ **Customizable Notifications:** Set delay after a previous notification
+ **Direct Messages:** Receive notifications for reactions in both public and private channels.
+ **Thread Support:** Stay updated on reactions within threaded discussions.
+ **Mobile Compatibility:** Enjoy seamless notifications on both desktop and mobile devices.
+
+## Benefits:
+
+ **Increased Engagement:** Stay connected with your team and foster a more interactive communication environment.
+ **Improved Collaboration:** Quickly respond to feedback and acknowledge contributions.
+ **Enhanced Visibility:** Never miss an important reaction to your messages.
+
+By integrating this plugin into your Mattermost instance, you can significantly enhance your team's communication and collaboration.
+
+
+## Changelog
+
+**v0.1.2**
+
+* Add option `Only new reactions` to display only new reactions. If checked, the subsequent notification will only include reactions that were not previously displayed.
+
+**v0.1.1**
+
+* Fixed deleted reactions logic
+* Update icon
 
 
 ## Development
