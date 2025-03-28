@@ -8,6 +8,7 @@ import (
 )
 
 const REACTION_KEY = "ract:"
+const REACTION_OFF_KEY = "off:"
 const REACTIONS_DELETED_MSG = "(Reactions deleted)"
 
 func (p *Plugin) getUsername(userID string) string {
@@ -85,7 +86,12 @@ func (p *Plugin) CheckFeedMessage(reaction *model.Reaction) {
 
 	userID := post.UserId
 
+	// Do not process reactions posts
 	if sentByPlugin, _ := post.GetProp("sent_by_plugin").(bool); sentByPlugin {
+		return
+	}
+	// Skip if user is tunrned off notifications by command
+	if isTurnedOff, _ := p.API.KVGet(REACTION_OFF_KEY + userID); isTurnedOff != nil {
 		return
 	}
 

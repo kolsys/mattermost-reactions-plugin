@@ -21,5 +21,9 @@ type Plugin struct {
 	botID string
 }
 
+func (p *Plugin) OnActivate() error {
+	p.RegisterCommands()
+	return nil
+}
 
 // See https://developers.mattermost.com/extend/plugins/server/reference/

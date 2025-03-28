@@ -17,8 +17,16 @@ This plugin extends Mattermost's functionality by providing real-time notificati
 
 By integrating this plugin into your Mattermost instance, you can significantly enhance your team's communication and collaboration.
 
+## Usage
+
+To completely turn off notifications you can use `/reactions` command.
+
 
 ## Changelog
+
+**v0.1.3**
+
+* Add command to turn `on` of `off` notifications for user
 
 **v0.1.2**
 
