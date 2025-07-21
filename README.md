@@ -32,7 +32,7 @@ To completely turn off notifications you can use `/reactions` command.
 
 **v0.1.3**
 
-* Add command to turn `on` of `off` notifications for user
+* Add command to turn `on` or `off` notifications for user
 
 **v0.1.2**
 
